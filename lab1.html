@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <style>
+        .error {
+            color: red;
+            display: none;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ссылка на список лабораторных работ -->
+    <a href="labs_list.html">Список лабораторних робіт</a>
+
+    <!-- Форма для заполнения данных регистрации -->
+    <form id="registrationForm" action="https://webhook.site/your-unique-id" method="post">
+        <!-- Поле для имени пользователя -->
+        <label for="firstName">Ім'я користувача:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <!-- Поле для фамилии пользователя -->
+        <label for="lastName">Прізвище користувача:</label>
+        <input type="text" id="lastName" name="lastName"><br><br>
+
+        <!-- Поле для электронной почты -->
+        <label for="email">Електронна пошта:</label>
+        <input type="email" id="email" name="email" required>
+        <span class="error" id="emailError">Введіть правильну адресу електронної пошти.</span><br><br>
+
+        <!-- Поле для пароля -->
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <!-- Поле для подтверждения пароля -->
+        <label for="confirmPassword">Підтвердження паролю:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <span class="error" id="passwordError">Паролі не співпадають.</span><br><br>
+
+        <!-- Поле для выбора даты рождения -->
+        <label for="birthdate">Дата народження:</label>
+        <input type="date" id="birthdate" name="birthdate" required><br><br>
+
+        <!-- Дополнительное поле с выбором -->
+        <label for="options">Виберіть опцію:</label>
+        <select id="options" name="options">
+            <option value="option1">Опція 1</option>
+            <option value="option2">Опція 2</option>
+            <option value="option3">Опція 3</option>
+        </select><br><br>
+
+        <!-- Кнопка для отправки данных на сервер -->
+        <input type="submit" value="Відправити">
+    </form>
+
+    <!-- JavaScript для проверки правильности ввода -->
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            // Получение значений полей пароля
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Получение значения поля почты
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // Регулярное выражение для проверки почты
+
+            let valid = true;
+
+            // Проверка совпадения паролей
+            if (password !== confirmPassword) {
+                document.getElementById('passwordError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+
+            // Проверка правильности почты
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+
+            // Если проверки не пройдены, предотвращаем отправку формы
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>
